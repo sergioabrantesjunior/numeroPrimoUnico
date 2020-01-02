@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2162
+# Prove: NumeroPrimoUnico
+# Descricao Curta: Verifica se número informado é primo
+# Descrição Longa: Verifica se número informado é primo
+# Frequencia: Sob demanda
+# Autor: Sérgio Abrantes
+# Contato: sergioabrantes@gmail.com
+# Site: https://github.com/sergioabrantesjunior/numeroPrimoUnico
+#
+#
+# Histórico:
+#
+#    v1.0.0 2019-01-01, Sérgio Abrantes:
+#       - Versão inicial do script
+: '
+Conceito básico: o número primo é um número que é divisível somente por 1 e por ele mesmo.
+Caso possua mais divisores, não é número primo, mas sim número composto.
+Exemplos:
+
+1) 2 tem apenas os divisores 1 e 2, portanto 2 é um número primo (único primo par).
+2) 17 tem apenas os divisores 1 e 17, portanto 17 é um número primo.
+3) 10 tem os divisores 1, 2, 5 e 10, portanto 10 não é um número primo.
+'
+
+#set -x
+clear
+read -p "Digite um número: " numero
+
+: '
+Compara se o número é 2 (único par), diferente de 1 (não primo) e
+se o número é par.
+Partindo dessa primeira análise, assume que é primo.
+'
+
+if [ "$numero" = 2 ] || [[ "$numero" != 1  &&  "$(( numero % 2 ))" = 1 ]];then
+	primo=1
+else
+	echo "Número não é primo"
+	exit 0
+fi
+
+: '
+Como todo número divisível por 1 é primo e divisor 2 já foi testado acima, 
+iniciamos os próximos testes a partir do divisor 3 até o ( $número / 2) 
+mais da metade dele não será e se for ímpar, condição testada acima.
+'
+divisor=3
+while [[ "$divisor" -lt "$((numero / 2))" && "$primo" = 1 ]];do
+	if [ "$(( numero % divisor ))" = 0 ];then
+		primo=0
+		break
+	fi
+	divisor=$((divisor+1))
+done
+
+if [ "$primo" = 1 ];then
+	echo "O Número $numero é primo"
+else
+	echo "O Número $numero não é primo" 
+fi
+
+
+
+
+
+
+
